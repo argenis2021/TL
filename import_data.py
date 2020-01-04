@@ -24,5 +24,3 @@ cur.copy_from(in_file, 'ventas_la_carlota', sep=',', columns=columns)
 # Cerramos la conexión
 conn.commit()
 conn.close()
-input()
-os.system('clear')
