@@ -59,6 +59,7 @@ def Volumen():
     os.system('clear')
 
 def Importar():
+    os.system("python change_coma_dot.py")
 #connect to the database
     conn = psycopg2.connect(host='localhost',
                             dbname='todolimpiecito',
@@ -67,14 +68,20 @@ def Importar():
     #create a cursor object 
     #cursor object is used to interact with the database
     cur = conn.cursor()
-    # Ejecutamos una consulta
-    cur.execute("\copy ventas_la_carlota (Fecha,CodCli,Cliente,Telefono,Cantidad,Descripción,Precio,Locación,Semana) from '/tmp/ventas.csv.tmp' delimiter ',' csv header;")
-    commit()
+    
+    #/home/argenis/apps/TL_IO/ventas.csv
+    in_file = open('/tmp/ventas.csv.tmp', 'r')
+    
+    # FIRST LINE IN FILE ARE COLUMN NAMES
+    # TURN FIRST LINE INTO AN ARRAY
+    columns = in_file.readline().strip('\n').split(',')
+    # LOAD COPY STARTING AT SECOND LINE IN FILE
+    cur.copy_from(in_file, 'ventas_la_carlota', sep=',', columns=columns)
     # Cerramos la conexión
+    conn.commit()
     conn.close()
     input()
     os.system('clear')
-
 
 def Google():
 
