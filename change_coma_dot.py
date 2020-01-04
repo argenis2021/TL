@@ -43,5 +43,6 @@ f1.close()
 f2.close()
 f3.close()
 
-#shutil.copy("ventas.csv.tmp", "/tmp/ventas.csv.tmp")
+shutil.copy("ventas.csv.tmp", "/tmp/ventas.csv.tmp")
 remove("ventas.csv.tmp1")
+remove("ventas.csv.tmp")
