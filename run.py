@@ -59,7 +59,7 @@ def Volumen():
     os.system('clear')
 
 def Importar():
-    os.system("python change_coma_dot.py")
+    os.system("python format_text_file.py")
     os.system("python import_data.py")
 
 def Google():
