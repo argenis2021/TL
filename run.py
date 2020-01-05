@@ -24,9 +24,8 @@ Sistema de Gestión de Datos
 Configuración
 -------------
 5) Importar datos de venta a base de datos Postgres
-6) Cambiar comas por puntos
-7) Crear archivo de contacto formato Google
-8) Crear archivo cvs para Sms Master
+6) Crear archivo de contacto formato Google
+7) Crear archivo csv para exportar contactos a Sms Master
 
 
 0)  Salir
@@ -58,12 +57,12 @@ def Volumen():
     input()
     os.system('clear')
 
-def Importar():
-    os.system("python format_file.py")
-    os.system("python delete_data_db.py")
-    os.system("python import_data.py")
-    input("Los datos fueron importados a la base de datos de postgres")
-    os.system('clear')
+def Importar():     
+    os.system("python format_file.py")      # format csv from google calc
+    os.system("python delete_data_db.py")       # delete existing data from ventas_la_carlota postgres table     
+    os.system("python import_data.py")      # Copy data froma csv file to postgres table
+    input("Los datos fueron importados a la base de datos de postgres")     #show message and stop
+    os.system('clear')      # clear terminal
 
 def Google():
 
