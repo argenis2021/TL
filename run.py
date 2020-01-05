@@ -60,6 +60,7 @@ def Volumen():
 
 def Importar():
     os.system("python format_file.py")
+    os.system("python delete_data_db.py")
     os.system("python import_data.py")
     input("Los datos fueron importados a la base de datos de postgres")
     os.system('clear')
