@@ -5,7 +5,7 @@ import operator
 import os
 import time
 
-date = time.strftime("%Y%m%d%H%M")		#Define the date
+date = time.strftime("%Y%m%d%H%M%S")		#Define the date
 sql = "COPY (select telefono, cliente\
        from ventas_la_carlota\
        where telefono not like ''\

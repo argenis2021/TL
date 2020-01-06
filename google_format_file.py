@@ -5,7 +5,7 @@ import os
 import time
 
 os.system('python export_data_all_phone.py')
-date = time.strftime("%Y%m%d%H%M")      #Define the date
+date = time.strftime("%Y%m%d%H%M%S")      #Define the date
 f1 = open('/home/argenis/apps/TL_IO/all_num_phone.csv', 'r')
 f2 = open('/home/argenis/apps/TL_IO/google_{}.csv'.format(date), 'w')
 entrada = csv.DictReader(f1)
