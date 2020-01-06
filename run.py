@@ -25,7 +25,7 @@ Configuración
 -------------
 5) Importar datos de venta a base de datos Postgres
 6) Crear archivo de contacto formato Google
-7) Crear archivo csv para exportar contactos a Sms Master
+7) Crear archivo csv para exportar contactos a SmsMaster
 
 
 0)  Salir
@@ -47,11 +47,12 @@ def Volumen():
     #cursor object is used to interact with the database
     cur = conn.cursor()
     # Ejecutamos una consulta
-    cur.execute("select cliente from ventas_la_carlota group by cliente order\
-                by cliente asc;")
+    cur.execute("select cliente, suma, dias from volumen order\
+                by suma desc fetch first 15 rows only;")
     # Recorremos los resultados y los mostramos
-    for cliente in cur.fetchall() :
-        print (cliente)
+    print('\n\n\n','Total','\t', 'dias','\t','Cliente')
+    for cliente, suma, dias in cur.fetchall() :
+        print (suma,'\t', dias,'\t',cliente)
 
     # Cerramos la conexión
     conn.close()
@@ -114,6 +115,8 @@ def estadisticas():
             Cantidad()
         elif(opc==4):
             Ventas()
+        elif(opc==6):
+            Google()
         elif(opc==5):
             Importar()
         elif(opc==7):
