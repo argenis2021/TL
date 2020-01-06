@@ -181,12 +181,7 @@ desc;
 create view telefono_cliente as
 Select row_number() over (order by cliente) as item, cliente, telefono
 from ventas_la_carlota
-where telefono is not null
-group by cliente, telefono;
-
-Select cliente, telefono
-from ventas_la_carlota
-where telefono is null
+where telefono not like ''
 group by cliente, telefono;
 
 
@@ -223,7 +218,9 @@ INNER JOIN antiguos ON telefono_cliente.cliente = antiguos.cliente
 LEFT JOIN no_deseado ON telefono_cliente.cliente = no_deseado.nombre
 where no_deseado.nombre is null;
 
-#telefono todos
+#Todos los telefonos
+
+create view all_num_phone as
 SELECT
     row_number() over (order by telefono_cliente.cliente) as item,
     telefono_cliente.cliente,
@@ -236,7 +233,7 @@ where no_deseado.nombre is null;
 \copy (select telefono,cliente from tel60) to '/tmp/tel60.csv' delimiter ',' csv header;
 \copy (select telefono,cliente from tel120) to '/tmp/tel120.csv' delimiter ',' csv header;
 \copy (select telefono,cliente from tel_antiguos) to '/tmp/tel_antiguos.csv' delimiter ',' csv header;
-\copy (select telefono,cliente from todo) to '/tmp/tel_todos.csv' delimiter ',' csv header;
+\copy (select telefono,cliente from all_num_phone) to '/tmp/tel_todos.csv' delimiter ',' csv header;
 
 #cantidad por producto
 
