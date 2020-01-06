@@ -16,7 +16,7 @@ conn = psycopg2.connect(host='localhost',		# connect to the database
                         user='postgres',
                         password='')
 cur = conn.cursor()		# cursor object is used to interact with the database
-in_file = open('/home/argenis/apps/TL_IO/sms-master_{}.csv'.format(date), 'w')
+in_file = open('/home/argenis/apps/TL_IO/sms_master_{}.csv'.format(date), 'w')
 # LOAD COPY STARTING AT SECOND LINE IN FILE
 cur.copy_expert(sql, in_file)
 # Cerramos la conexión

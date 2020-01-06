@@ -184,6 +184,12 @@ from ventas_la_carlota
 where telefono is not null
 group by cliente, telefono;
 
+Select cliente, telefono
+from ventas_la_carlota
+where telefono is null
+group by cliente, telefono;
+
+
 #telefono 60
 SELECT
     row_number() over (order by sesenta.cliente) as item,
@@ -230,7 +236,7 @@ where no_deseado.nombre is null;
 \copy (select telefono,cliente from tel60) to '/tmp/tel60.csv' delimiter ',' csv header;
 \copy (select telefono,cliente from tel120) to '/tmp/tel120.csv' delimiter ',' csv header;
 \copy (select telefono,cliente from tel_antiguos) to '/tmp/tel_antiguos.csv' delimiter ',' csv header;
-\copy (select telefono,cliente from todos) to '/tmp/tel_todos.csv' delimiter ',' csv header;
+\copy (select telefono,cliente from todo) to '/tmp/tel_todos.csv' delimiter ',' csv header;
 
 #cantidad por producto
 

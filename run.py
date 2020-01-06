@@ -63,7 +63,7 @@ def Importar():
     os.system("python delete_data_db.py")       # delete existing from table     
     os.system("python import_data.py")      # Copy data from csv file to table
     input("Los datos fueron importados a la base de datos\
-         de postgres")     #show message and stop
+ de postgres")     #show message and stop
     os.system('clear')      # clear terminal
 
 def Google():
@@ -93,6 +93,13 @@ def Ventas ():
         print ("La Division es:", dividendo/divisor)
     except ZeroDivisionError:
         print ("No se Permite la Division Entre 0")
+
+def smsmaster ():
+    os.system("python export_data.py")
+    print ("Archivo sms_master está disponible en apps/TL_IO/")
+    input()
+    os.system('clear')
+    
     
 def estadisticas():
     fin = 0
@@ -110,7 +117,7 @@ def estadisticas():
         elif(opc==5):
             Importar()
         elif(opc==7):
-            Google()
+            smsmaster()
         elif(opc==0):
             os.system('clear')
             fin = 1
