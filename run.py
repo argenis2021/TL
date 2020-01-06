@@ -68,9 +68,11 @@ def Importar():
     os.system('clear')      # clear terminal
 
 def Google():
-
-    f1 = open('/tmp/tel_todo.csv', 'r')
-    f2 = open('/home/argenis/apps/TL_IO/google_tel_todo.csv', 'w')
+    
+    os.system('python export_data_all_phone.py')
+    date = time.strftime("%Y%m%d%H%M")      #Define the date
+    f1 = open('/home/argenis/apps/TL_IO/all_num_phone.csv', 'r')
+    f2 = open('/home/argenis/apps/TL_IO/google_{}.csv'.format(date), 'w')
     entrada = csv.DictReader(f1)
     f2.write('Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name\
              Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name\
