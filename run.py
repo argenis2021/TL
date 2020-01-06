@@ -47,7 +47,8 @@ def Volumen():
     #cursor object is used to interact with the database
     cur = conn.cursor()
     # Ejecutamos una consulta
-    cur.execute("select cliente from ventas_la_carlota group by cliente order by cliente asc;")
+    cur.execute("select cliente from ventas_la_carlota group by cliente order\
+                by cliente asc;")
     # Recorremos los resultados y los mostramos
     for cliente in cur.fetchall() :
         print (cliente)
@@ -59,9 +60,10 @@ def Volumen():
 
 def Importar():     
     os.system("python format_file.py")      # format csv from google calc
-    os.system("python delete_data_db.py")       # delete existing data from ventas_la_carlota postgres table     
-    os.system("python import_data.py")      # Copy data froma csv file to postgres table
-    input("Los datos fueron importados a la base de datos de postgres")     #show message and stop
+    os.system("python delete_data_db.py")       # delete existing from table     
+    os.system("python import_data.py")      # Copy data from csv file to table
+    input("Los datos fueron importados a la base de datos\
+         de postgres")     #show message and stop
     os.system('clear')      # clear terminal
 
 def Google():
@@ -69,9 +71,15 @@ def Google():
     f1 = open('/tmp/tel_todo.csv', 'r')
     f2 = open('/home/argenis/apps/TL_IO/google_tel_todo.csv', 'w')
     entrada = csv.DictReader(f1)
-    f2.write('Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender,Location,Billing Information,Directory Server,Mileage,Occupation,Hobby,Sensitivity,Priority,Subject,Notes,Language,Photo,Group Membership,Phone 1 - Type,Phone 1 - Value'+'\n')
+    f2.write('Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name\
+             Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name\
+              Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender\
+              ,Location,Billing Information,Directory Server,Mileage,Occupation\
+              ,Hobby,Sensitivity,Priority,Subject,Notes,Language,Photo,Group\
+               Membership,Phone 1 - Type,Phone 1 - Value'+'\n')
     for reg in entrada:
-        f2.write('11AA '+reg['cliente']+',,,,,,,,,,,,,,,,,,,,,,,,,Avenida B,,,* Avenida B ::: * Avenida B,Mobile,'+reg['telefono']+'\n')
+        f2.write('11AA '+reg['cliente']+',,,,,,,,,,,,,,,,,,,,,,,,,Avenida B,,,*\
+                 Avenida B ::: * Avenida B,Mobile,'+reg['telefono']+'\n')
     f1.close()
     f2.close()
     print ("Archivo google_tel_todo.csv disponible en apps/TL_IO/")
