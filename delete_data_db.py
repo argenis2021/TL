@@ -10,6 +10,7 @@ conn = psycopg2.connect(host='localhost',
                         user='postgres',
                         password='')
 cur = conn.cursor()		# create a cursor object 
-cur.execute("delete from ventas_la_carlota;")		# cursor object is used to interact with the database
+cur.execute("delete from ventas_la_carlota;")
+cur.execute("alter sequence ventas_la_carlota_pk_ventas_seq restart 1;;")		# cursor object is used to interact with the database
 conn.commit()		# Save changes
 conn.close()		# Close connection
