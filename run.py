@@ -16,15 +16,15 @@ Sistema de Gestión de Datos
   
   Reportes
 ------------
-1) Estrellas
-2) Volumen
-3) Cantidad
-4) Ventas
+1) Clientes estrellas
+2) Clientes con mayor volumen de compras
+3) Clientes con mayor frecuencia de compras
+4) Ventas de productos por decripción
 
 Configuración
 -------------
 5) Importar datos de venta a base de datos Postgres
-6) Crear archivo de contacto formato Google
+6) Crear archivo de contacto con formato de Google Contacts
 7) Crear archivo csv para exportar contactos a SmsMaster
 
 
@@ -99,8 +99,8 @@ def Cantidad():
 
 
 def Ventas():
-    datefrom=input('Fecha desde:')
-    dateto=input('Fecha hasta:')
+    datefrom=input('Desde (dd/mm/aa):')
+    dateto=input('Hasta (dd/mm/aa):')
     conn=psycopg2.connect(host='localhost',       # connect to the database
                             dbname='todolimpiecito',
                             user='postgres',
