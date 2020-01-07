@@ -32,9 +32,32 @@ Configuración
 ------------""")
 
 def Estrellas():
-    sum1 = int(input("Sumando uno:"))
-    sum2 = int(input("Sumando dos:"))
-    print ("La Suma es:", sum1+sum2)
+       #connect to the database
+    conn = psycopg2.connect(host='localhost',
+                            dbname='todolimpiecito',
+                            user='postgres',
+                            password='')
+    #create a cursor object 
+    #cursor object is used to interact with the database
+    cur = conn.cursor()
+    # Ejecutamos una consulta
+    cur.execute("SELECT volumen.cliente as cliente,volumen.suma/cantidad.compras\
+    as promedio,volumen.suma as litros,cantidad.compras,cantidad.dias\
+    FROM volumen INNER JOIN cantidad ON volumen.cliente =\
+    cantidad.cliente where (cantidad.compras >3 or volumen.suma >10)\
+    and cantidad.dias<61 and volumen.suma/cantidad.compras >4\
+    order by promedio desc;")
+    # Recorremos los resultados y los mostramos
+    print('\n','Promedio','\t', 'Litros','\t','Compras','\t','Días','\t','Cliente')
+    lista=cur.fetchall()
+    for cliente,promedio,litros,volumen,cantidad in lista :
+        print ("{0:.1f}".format(promedio),'\t\t',litros,'\t\t',volumen,'\t\t',cantidad,'\t',cliente)
+
+    # Cerramos la conexión
+    conn.close()
+    input()
+    os.system('clear')
+
 
 def Volumen():
        
@@ -47,12 +70,37 @@ def Volumen():
     #cursor object is used to interact with the database
     cur = conn.cursor()
     # Ejecutamos una consulta
-    cur.execute("select cliente, suma, dias from volumen order\
+    cur.execute("SELECT cliente, suma, dias from volumen order\
                 by suma desc fetch first 15 rows only;")
     # Recorremos los resultados y los mostramos
     print('\n\n\n','Total','\t', 'dias','\t','Cliente')
     for cliente, suma, dias in cur.fetchall() :
         print (suma,'\t', dias,'\t',cliente)
+
+    # Cerramos la conexión
+    conn.close()
+    input()
+    os.system('clear')
+
+
+def Cantidad():
+    conn = psycopg2.connect(host='localhost',       # connect to the database
+                            dbname='todolimpiecito',
+                            user='postgres',
+                            password='')
+    cur = conn.cursor()     # create a cursor object 
+    cur.execute("SELECT qry1.cliente as cliente,count(qry1.fecha) as compras,\
+    current_date-max(qry1.fecha) as dias,count(qry1.fecha)/(current_date-\
+    min(qry1.fecha)):: double PRECISION *30  as comprasXmes from\
+     (SELECT cliente, fecha from ventas_la_carlota where cliente <>\
+     'Desconocido'group by fecha, cliente) as qry1 group by qry1.cliente\
+     order by compras desc fetch first 15 rows only;")       # run query
+    # Recorremos los resultados y los mostramos
+    print('\n','Compras','\t', 'Días','\t','Compras x Mes','\t','Cliente')
+    lista=cur.fetchall()
+    for cliente,compras,dias,comprasXmes in lista :
+        print (compras,'\t\t',dias,'\t',"{0:.1f}".format(comprasXmes),
+            '\t\t',cliente)
 
     # Cerramos la conexión
     conn.close()
@@ -68,9 +116,9 @@ def Importar():
     os.system('clear')      # clear terminal
 
 def Google():
-    os.system('export_data_all_phone.py')
+    os.system('python export_data_all_phone.py')
     os.system('python google_format_file.py')   
-    print ("Archivo google_tel_todo.csv disponible en apps/TL_IO/")
+    print ("Archivo disponible en apps/TL_IO/")
     input()
     os.system('clear')
     
