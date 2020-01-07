@@ -31,89 +31,81 @@ Configuración
 0)  Salir
 ------------""")
 
+
 def Estrellas():
-       #connect to the database
     conn = psycopg2.connect(host='localhost',
                             dbname='todolimpiecito',
                             user='postgres',
-                            password='')
-    #create a cursor object 
-    #cursor object is used to interact with the database
-    cur = conn.cursor()
-    # Ejecutamos una consulta
+                            password='')            #connect to the database
+    cur = conn.cursor()     # create a cursor object 
     cur.execute("SELECT volumen.cliente as cliente,volumen.suma/cantidad.compras\
-    as promedio,volumen.suma as litros,cantidad.compras,cantidad.dias\
-    FROM volumen INNER JOIN cantidad ON volumen.cliente =\
-    cantidad.cliente where (cantidad.compras >3 or volumen.suma >10)\
-    and cantidad.dias<61 and volumen.suma/cantidad.compras >4\
-    order by promedio desc;")
-    # Recorremos los resultados y los mostramos
-    print('\n','Promedio','\t', 'Litros','\t','Compras','\t','Días','\t','Cliente')
+               as promedio,volumen.suma as litros,cantidad.compras,cantidad.dias\
+               FROM volumen INNER JOIN cantidad ON volumen.cliente =\
+               cantidad.cliente where (cantidad.compras >3 or volumen.suma >10)\
+               and cantidad.dias<61 and volumen.suma/cantidad.compras >4\
+               order by promedio desc;")     # Ejecutamos una consulta
+    print('\n','Promedio','\t', 'Litros','\t','Compras','\t','Días',
+         '\t','Cliente')
     lista=cur.fetchall()
     for cliente,promedio,litros,volumen,cantidad in lista :
-        print ("{0:.1f}".format(promedio),'\t\t',litros,'\t\t',volumen,'\t\t',cantidad,'\t',cliente)
-
-    # Cerramos la conexión
-    conn.close()
+        print ("{0:.1f}".format(promedio),'\t\t',
+              litros,'\t\t',volumen,'\t\t',cantidad,
+              '\t',cliente)           # Recorremos los resultados y los mostramos
+    conn.close()        # Cerramos la conexión
     input()
     os.system('clear')
 
 
 def Volumen():
-       
-    #connect to the database
     conn = psycopg2.connect(host='localhost',
                             dbname='todolimpiecito',
                             user='postgres',
-                            password='')
-    #create a cursor object 
-    #cursor object is used to interact with the database
-    cur = conn.cursor()
-    # Ejecutamos una consulta
+                            password='')        # connect to the database
+    cur = conn.cursor()     # create a cursor object 
     cur.execute("SELECT cliente, suma, dias from volumen order\
-                by suma desc fetch first 15 rows only;")
-    # Recorremos los resultados y los mostramos
+               by suma desc fetch first 15 rows only;")     # Ejecutamos una consulta
     print('\n\n\n','Total','\t', 'dias','\t','Cliente')
-    for cliente, suma, dias in cur.fetchall() :
+    for cliente, suma,\
+        dias in cur.fetchall() :     # Recorremos los resultados y los mostramos
         print (suma,'\t', dias,'\t',cliente)
-
-    # Cerramos la conexión
-    conn.close()
+    conn.close()        # Cerramos la conexión
     input()
     os.system('clear')
 
 
 def Cantidad():
-    conn = psycopg2.connect(host='localhost',       # connect to the database
+    conn=psycopg2.connect(host='localhost',       # connect to the database
                             dbname='todolimpiecito',
                             user='postgres',
                             password='')
-    cur = conn.cursor()     # create a cursor object 
+    cur=conn.cursor()     # create a cursor object 
     cur.execute("SELECT qry1.cliente as cliente,count(qry1.fecha) as compras,\
-    current_date-max(qry1.fecha) as dias,count(qry1.fecha)/(current_date-\
-    min(qry1.fecha)):: double PRECISION *30  as comprasXmes from\
-     (SELECT cliente, fecha from ventas_la_carlota where cliente <>\
-     'Desconocido'group by fecha, cliente) as qry1 group by qry1.cliente\
-     order by compras desc fetch first 15 rows only;")       # run query
-    # Recorremos los resultados y los mostramos
-    print('\n','Compras','\t', 'Días','\t','Compras x Mes','\t','Cliente')
+                current_date-max(qry1.fecha) as dias,count(qry1.fecha)/(current_date-\
+                min(qry1.fecha)):: double PRECISION *30  as comprasXmes from\
+                (SELECT cliente, fecha from ventas_la_carlota where cliente <>\
+                'Desconocido'group by fecha, cliente) as qry1 group by\
+                qry1.cliente order by compras desc\
+                fetch first 15 rows only;")     # run query
+    print('\n','Compras','\t',
+         'Días','\t','Compras x Mes','\t','Cliente')        # Print header
     lista=cur.fetchall()
-    for cliente,compras,dias,comprasXmes in lista :
+    for cliente,compras,dias,\
+        comprasXmes in lista :  # Recorremos los resultados y los mostramos    
         print (compras,'\t\t',dias,'\t',"{0:.1f}".format(comprasXmes),
-            '\t\t',cliente)
-
-    # Cerramos la conexión
-    conn.close()
+              '\t\t',cliente)
+    conn.close()        # Cerramos la conexión
     input()
     os.system('clear')
+
 
 def Importar():     
     os.system("python format_file.py")      # format csv from google calc
     os.system("python delete_data_db.py")       # delete existing from table     
     os.system("python import_data.py")      # Copy data from csv file to table
     input("Los datos fueron importados a la base de datos\
- de postgres")     #show message and stop
+         de postgres")     #show message and stop
     os.system('clear')      # clear terminal
+
 
 def Google():
     os.system('python export_data_all_phone.py')
@@ -122,13 +114,6 @@ def Google():
     input()
     os.system('clear')
     
-def Ventas ():
-    try:
-        dividendo = int(input("Dividendo:"))
-        divisor = int(input("Divisor:"))
-        print ("La Division es:", dividendo/divisor)
-    except ZeroDivisionError:
-        print ("No se Permite la Division Entre 0")
 
 def smsmaster ():
     os.system("python export_data_sms.py")
