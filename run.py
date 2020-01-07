@@ -98,6 +98,28 @@ def Cantidad():
     os.system('clear')
 
 
+def Ventas():
+    datefrom=input('Fecha desde:')
+    dateto=input('Fecha hasta:')
+    conn=psycopg2.connect(host='localhost',       # connect to the database
+                            dbname='todolimpiecito',
+                            user='postgres',
+                            password='')
+    cur=conn.cursor()     # create a cursor object 
+    cur.execute("SELECT Descripción,sum(cantidad) AS cantidad FROM\
+               ventas_la_carlota where descripción is not null and \
+               descripción <> 'Desconocido' and fecha between\
+               '{}' and '{}' group by descripción\
+               order by cantidad desc;".format(str(datefrom),str(dateto)))     # run query
+    print('\n','Cantidad','\t','Descripción')        # Print header
+    lista=cur.fetchall()
+    for Descripcion,cantidad in lista :  # Recorremos los resultados y los mostramos    
+        print ('  ',"{0:.0f}".format(cantidad),'\t\t',Descripcion)
+    conn.close()        # Cerramos la conexión
+    input()
+    os.system('clear')
+
+
 def Importar():     
     os.system("python format_file.py")      # format csv from google calc
     os.system("python delete_data_db.py")       # delete existing from table     
