@@ -41,7 +41,7 @@ def Estrellas():
     cur.execute("SELECT volumen.cliente as cliente,volumen.suma/cantidad.compras\
                as promedio,volumen.suma as litros,cantidad.compras,cantidad.dias\
                FROM volumen INNER JOIN cantidad ON volumen.cliente =\
-               cantidad.cliente where (cantidad.compras >3 or volumen.suma >10)\
+               cantidad.cliente where (cantidad.compras >1 and volumen.suma >10)\
                and cantidad.dias<61 and volumen.suma/cantidad.compras >4\
                order by promedio desc;")     # Ejecutamos una consulta
     print('\n','Promedio','\t', 'Litros','\t','Compras','\t','Días',
