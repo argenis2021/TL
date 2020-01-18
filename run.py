@@ -130,7 +130,7 @@ def Importar():
 
 
 def Google():
-    os.system('python export_data_all_phone.py')
+    #os.system('python export_data_all_phone.py')
     os.system('python google_format_file.py')   
     print ("Archivo disponible en apps/TL_IO/")
     input()

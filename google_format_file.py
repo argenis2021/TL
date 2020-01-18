@@ -4,9 +4,9 @@ import csv
 import os
 import time
 
-os.system('python export_data_all_phone.py')
+os.system('python export_data_googletmp.py')
 date = time.strftime("%Y%m%d%H%M%S")      #Define the date
-f1 = open('/home/argenis/apps/TL_IO/all_num_phone.csv', 'r')
+f1 = open('/home/argenis/apps/TL_IO/to_export_googletmp.csv', 'r')
 f2 = open('/home/argenis/apps/TL_IO/google_{}.csv'.format(date), 'w')
 entrada = csv.DictReader(f1)
 f2.write('Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name\
