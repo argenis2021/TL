@@ -26,7 +26,7 @@ Configuración
 5) Importar datos de venta a base de datos Postgres
 6) Crear archivo de contacto con formato de Google Contacts
 7) Crear archivo csv para exportar contactos a SmsMaster
-
+8)
 
 0)  Salir
 ------------""")
@@ -141,7 +141,6 @@ def smsmaster ():
     print ("Archivo sms_master está disponible en apps/TL_IO/")
     input()
     os.system('clear')
-    
     
 def estadisticas():
     fin = 0
