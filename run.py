@@ -127,14 +127,14 @@ def Lugar():
                             user='postgres',
                             password='')
     cur=conn.cursor()     # create a cursor object 
-    cur.execute("SELECT locación AS locación FROM\
+    cur.execute("SELECT row_number() over (order by locación) AS item, locación AS locación FROM\
                ventas_la_carlota where locación is not null and \
-               locación <> 'Desconocido' group by locación\
-               order by locación desc;    # run query
-    print('\n','Lugar','\t')        # Print header
+               locación <> 'Desconocido' group by locación \
+               order by locación asc;")    # run query
+    print('\n','Item','  ','Lugar','\t')        # Print header
     lista=cur.fetchall()
-    for locacion in lista :  # Recorremos los resultados y los mostramos    
-        print ('  ', locacion)
+    for item, locacion in lista :  # Recorremos los resultados y los mostramos    
+        print ('  ',item,'  ',locacion)
     conn.close()        # Cerramos la conexión
     input()
     os.system('clear')
