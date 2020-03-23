@@ -26,7 +26,7 @@ Configuración
 5) Importar datos de venta a base de datos Postgres
 6) Crear archivo de contacto con formato de Google Contacts
 7) Crear archivo csv para exportar contactos a SmsMaster
-8)
+8) Lugar
 
 0)  Salir
 ------------""")
@@ -119,6 +119,25 @@ def Ventas():
     input()
     os.system('clear')
 
+def Lugar():
+    #datefrom=input('Desde (dd/mm/aa):')
+    #dateto=input('Hasta (dd/mm/aa):')
+    conn=psycopg2.connect(host='localhost',       # connect to the database
+                            dbname='todolimpiecito',
+                            user='postgres',
+                            password='')
+    cur=conn.cursor()     # create a cursor object 
+    cur.execute("SELECT locación AS locación FROM\
+               ventas_la_carlota where locación is not null and \
+               locación <> 'Desconocido' group by locación\
+               order by locación desc;    # run query
+    print('\n','Lugar','\t')        # Print header
+    lista=cur.fetchall()
+    for locacion in lista :  # Recorremos los resultados y los mostramos    
+        print ('  ', locacion)
+    conn.close()        # Cerramos la conexión
+    input()
+    os.system('clear')
 
 def Importar():     
     os.system("python format_file.py")      # format csv from google calc
@@ -161,6 +180,8 @@ def estadisticas():
             Importar()
         elif(opc==7):
             smsmaster()
+        elif(opc==8):
+            Lugar()
         elif(opc==0):
             os.system('clear')
             fin = 1
