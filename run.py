@@ -136,6 +136,8 @@ def Lugar():
     for item, locacion in lista :  # Recorremos los resultados y los mostramos    
         print ('  ',item,'  ',locacion)
     conn.close()        # Cerramos la conexión
+    opc = int(input("\n\nSelecciones una opción:"))
+    print(lista[opc-1][1])
     input()
     os.system('clear')
 
@@ -185,5 +187,27 @@ def estadisticas():
         elif(opc==0):
             os.system('clear')
             fin = 1
-            
+def menu_():
+    fin = 0
+    while (fin==0):
+        opc = int(input("\n\nSelecciones una opción:"))
+        if (opc==1):
+            Estrellas()
+        elif(opc==2):
+            Volumen()
+        elif(opc==3):
+            Cantidad()
+        elif(opc==4):
+            Ventas()
+        elif(opc==6):
+            Google()
+        elif(opc==5):
+            Importar()
+        elif(opc==7):
+            smsmaster()
+        elif(opc==8):
+            Lugar()
+        elif(opc==0):
+            os.system('clear')
+            fin = 1            
 estadisticas()
