@@ -7,7 +7,8 @@ import time
 
 sql = "COPY (select telefono, cliente\
        from ventas_la_carlota\
-       where telefono not like ''\
+       LEFT JOIN no_deseado ON ventas_la_carlota.cliente = no_deseado.nombre\
+       where telefono not like '' and no_deseado.nombre is null\
        group by cliente, telefono) TO STDOUT WITH \
         CSV DELIMITER ',' header"		# Create the sql senteces in STDOUT
 conn = psycopg2.connect(host='localhost',		# connect to the database

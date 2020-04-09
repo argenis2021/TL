@@ -2,7 +2,7 @@
 select *
 from
 	(
-		select cliente, sum(cantidad) as suma, current_date-max(fecha) as dia 
+		select cliente, sum(cantidad) as suma, current_date-max(fecha) as dia
 		from ventas_la_carlota
 		group by cliente
 	) as foo
